@@ -32,7 +32,6 @@ include '../connexion/connect.php';
 
    $cost = ['cost' => 12];
   $passwords = password_hash($passwords, PASSWORD_DEFAULT); 
-
   $stmtAjoutuser = $bdd->prepare("INSERT INTO user(nom,prenom,email,roles,photo,passwords,matricule) 
         VALUES ('$nom','$prenom','$email','$roles','$photo','$passwords','$mat')");
   $stmtAjoutuser->execute();

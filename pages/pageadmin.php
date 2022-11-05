@@ -39,7 +39,7 @@ $photo = $res->fetch();
         <div class="col-md-6">
           <label for="inputState" class="form-label"><img style="width:100px; height:100px; border-radius:50px;/1500px;" src="data:image/png; charset=utf8;base64,<?php echo base64_encode($photo['photo']) ?>" alt="" srcset="">
           <h6><?php echo $data['matricule']; ?> </h6>
-          <button class="btn  btn-secondary my-1" ><a href="../pages/paramétrage.php" class="text-light"><i class="bi bi-gear"></i></a></button>
+          <button class="btn  btn-secondary my-1" ><a href="../pages/paramétrage.php" class="text-light"><i class="bi bi-gear"> Paramétres</i></a></button>
         </div>
         <div class="moi">
           <h4 class="ass"><?php echo $data['prenom']; ?> <?php echo $data['nom']; ?></h4>
@@ -126,17 +126,37 @@ $photo = $res->fetch();
     </thead>
     <tbody>
       <?php
-      $stmt = $bdd->prepare("SELECT * FROM user");
-      $stmt->execute();
-      if(isset($_POST["verif"])){
-        if(isset($_POST["classe"])){
-            $prenom = $_POST["classe"];
-            if(!empty($prenom)){                   
-    include("../connexion/connect.php");
-    $list = "SELECT * FROM user WHERE prenom LIKE '%$prenom%' or nom LIKE '%$prenom%' ";
-    $stmt= $bdd->query($list);}}}
 
-      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    
+    include("../connexion/connect.php");
+if(isset($_GET['page']) && !empty($_GET['page'])){
+  $pageactuelle=(int) strip_tags($_GET['page']);
+}else{
+  $pageactuelle=1;
+}
+$list=$bdd->prepare("SELECT count(*) AS nbre_user FROM user WHERE etat=0");
+$list->execute();
+$resultat=$list->fetch();
+$nbresuser=(int)$resultat['nbre_user'];
+$mapage=5;
+$pages=ceil($nbresuser/$mapage);
+$first=($pageactuelle*$mapage)-$mapage;
+$id=$data['id'];
+   $list=$bdd->prepare("SELECT * FROM user WHERE etat=0  AND id!=$id ORDER BY id desc LIMIT $first,$mapage");
+   $list->execute();
+
+/*    $list = $bdd->prepare("SELECT * FROM user");
+   $list->execute();  */
+   if(isset($_POST["verif"])){
+     if(isset($_POST["classe"])){
+         $prenom = $_POST["classe"];
+         if(!empty($prenom)){                   
+ include("../connexion/connect.php");
+ $id=$data['id'];
+ $list = "SELECT * FROM user WHERE id!=$id AND prenom LIKE '%$prenom%' or nom LIKE '%$prenom%'  ";
+ $list= $bdd->query($list);}}} 
+
+      while ($row = $list->fetch(PDO::FETCH_ASSOC)) {
         // var_dump($row);
         // exit;
         $nom = $row['nom'];
@@ -174,12 +194,31 @@ if($etat==0){
     </tbody>
   </table>
 
+  <nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item <?=($pageactuelle==1)? "disabled" : "" ?>">
+      <a class="page-link" href="?page=<?= $pageactuelle - 1?>" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <?php
+    for($page=1; $page <= $pages; $page++) : ?>
+    <li class="page-item <?=($pageactuelle==$page)? "active" : "" ?> ">
+      <a class="page-link" href="?page=<?= $page ?>"><?= $page ?></a>
+    </li>
+    <?php endfor ?>
+    <li class="page-item  <?=($pageactuelle==$pages)? "disabled" : "" ?> ">
+      <a class="page-link" href="?page=<?=$pageactuelle+1?>" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 
-<div id="footer" style=" height:30px; display:flex; justify-content:center;">
-  <button><i class="bi bi-arrow-left"></i></button>
-  <button><i class="bi bi-arrow-right"></i></button>
+
 
 </div>
 

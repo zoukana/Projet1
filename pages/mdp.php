@@ -47,9 +47,14 @@ $check = password_verify($ancien,$passwordUser['passwords']);
   <script src="https://kit.fontawesome.com/431fa92df2.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
+<header>
+<button type="button" class="btn btn-primary"><a href="../pages/paramétrage.php" style="color:white">Retour</a></button>
+</header>
 
 <body>
-<form action="" name="changepwd" method="POST"  class="row g-3"  onsubmit="return valid();">
+  <div style="width:70%; display:flex; justify-content:center">
+
+<form action="" name="changepwd" method="POST"  class="row g-3"  onsubmit="return valid();" style="margin-top: 20px; margin-left:350px; background-color:#F5F5F5">
 <div class="col-md-6">
         <label for="inputAddress" class="form-label">Email (*)</label>
         <input type="text" autocomplete="off" class="form-control" id="email" placeholder="Email" name="email">
@@ -61,7 +66,8 @@ $check = password_verify($ancien,$passwordUser['passwords']);
         <input type="password" class="form-control" name="opwd" id="opwd" placeholder="mot_de_passe">
         <p id="erreurpwd1"></p>
 
-      </div>
+      </div >
+      <div class="col-6">
         <label for="inputAddress2" class="form-label">nouveau mot_de_passe*</label>
         <input type="password" name="pwd" class="form-control" id="pwd" placeholder="mot_de_passe">
         <p id="erreurpwd"></p>
@@ -70,15 +76,13 @@ $check = password_verify($ancien,$passwordUser['passwords']);
         <label for="inputAddress2" class="form-label">confirme mot_de_passe* </label>
         <input type="password" class="form-control" name="pwd1" id="pwd1" placeholder="mot_de_passe">
         <p id="erreurpwd1"></p>
+      </div>
         <div class="col-6">
         <input type="submit" id="submit" name="submit" value="change password"  class="btn btn-primary" style="background-color:#05006B">
 </div>
 
-      </div>
-
-
-
 </form>
+</div>
 </body>
 </html>
 
