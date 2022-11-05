@@ -2,12 +2,12 @@
 include('../connexion/connect.php');
 session_start();
 include('../connexion/connect.php');
-
+//requete nous permettant de recuperer les information de l'utilisateur qui s'est connecter
 $req = $bdd->prepare("SELECT * FROM user where matricule=?");
 $req->execute(array($_SESSION['matricule']));
 $data = $req->fetch();
 
-
+//requete nous permettant de recuperer la photo au niveau de notre table image
 $res = $bdd->prepare("SELECT photo FROM images WHERE user=?");
 $res->execute([$_SESSION['id']]);
 $photo = $res->fetch();
@@ -56,7 +56,7 @@ $photo = $res->fetch();
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Archiver</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Déconnexion</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
