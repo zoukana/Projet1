@@ -33,30 +33,29 @@ $req=$bdd->prepare("SELECT * FROM user where matricule=?" );
     <title>Page employes</title>
 </head>
 
-<body  style="background-color:#F5F5F5; ">
 <header>
-    <div id="header" style="background-color:#F5F5F5; height:100px;" >  
+    <div id="header" style="background-color:#645DFD; height:200px;" >  
         <div class="col-md-6">
           <label for="inputState" class="form-label"><img style="width:100px; height:100px; border-radius:50px;/1500px;" src="data:image/png; charset=utf8;base64,<?php echo base64_encode($photo['photo']) ?>" alt="" srcset="">
           <h6><?php echo $data['matricule']; ?> </h6>
-          <button class="btn  btn-secondary my-1" ><a href="../pages/paramétrage.php" class="text-light"><i class="bi bi-gear"></i></a></button>
+          <button class="btn  btn-secondary my-1" ><a href="../pages/paramétrage.php" class="text-light"><i class="bi bi-gear"> Paramétres</i></a></button>
         </div>
         <div class="moi">
           <h4 class="ass"><?php echo $data['prenom']; ?> <?php echo $data['nom']; ?></h4>
-          <p class="role"> <?php echo $data['roles']; ?> </p>
-        <!--   <button class="btn btn-outline-danger my-1 role"><a href="../connexion/connexion.php?deleteid='.$id.'">
+          <p class="role"><?php echo $data['roles']; ?> </p>
+         <!--  <button class="btn btn-outline-danger my-1 role"><a href="../connexion/connexion.php?deleteid='.$id.'">
                 <i class="bi bi-arrow-bar-left"></i></a>
               </button>  -->
-              <div style="margin-left: 80px;">                 
+     <div style="margin-left: 30px;">                 
  <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-            <i class="bi bi-arrow-bar-left"></i>
+            <i class="bi bi-arrow-bar-left">Déconnexion</i>
         </button>
         
         <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Archiver</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Déconnexion</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -69,7 +68,7 @@ $req=$bdd->prepare("SELECT * FROM user where matricule=?" );
             </div>
           </div>
         </div>  
-        </div>
+
 
             <div>
            
@@ -77,24 +76,27 @@ $req=$bdd->prepare("SELECT * FROM user where matricule=?" );
       </div>
   </header>
 
-</div>
-<br>
-<br>
-<br>
-<div class="container" style="display:flex; justify-content: space-between; ">
-<nav class="navbar bg-light">
-  <div class="container-fluid">
 
-  <form action="" method="post" class="d-flex" role="search" >
+  <body style="background-color:#F5F5F5; ">
+  <br>
+  <br>
+  
+  <div class="container" style="display:flex; justify-content: space-between; ">
+    <nav class="navbar">
+      <div class="container-fluid">
+
+      <form action="" method="post" class="d-flex" role="search" >
     <input type="text" name="classe" placeholder="search" class="form-control me-2"  aria-label="Search">
     <input type="submit" name="verif" value="SEARCH" class="btn btn-outline-primary">
 </form>
 
+</div>
+
+
+    </nav>
+ 
+    
   </div>
-  
-</nav>
-        <a href="../CRUD/archiver.php" >Liste des employes archiver?</a>
-    </div>
     <table class="table w-75 container h-100" style="background-color:#FFFFFF">
   <thead style="background-color:#05006B">
     <tr style="color:white"> 
@@ -106,74 +108,113 @@ $req=$bdd->prepare("SELECT * FROM user where matricule=?" );
     </tr>
   </thead>
   <tbody>
-    <?php
-    $stmt=$bdd->prepare("SELECT * FROM user where etat=0 ");
-    $stmt->execute();
-    if(isset($_POST["verif"])){
-      if(isset($_POST["classe"])){
-          $prenom = $_POST["classe"];
-          if(!empty($prenom)){                   
-  include("../connexion/connect.php");
-  $list = "SELECT * FROM user WHERE  roles='user' and prenom LIKE '%$prenom%' or nom LIKE '%$prenom%' ";
-  $stmt = $bdd->query($list);}}}
+  <?php
+
     
-    while ($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
-      $nom=$row['nom'];
-      $prenom=$row['prenom'];
-      $email=$row['email'];
-      $matricule=$row['matricule'];
-      $roles=$row['roles'];
-      $date_ins=$row['date inscription'];
-      $id=$row['id'];
+include("../connexion/connect.php");
+if(isset($_GET['page']) && !empty($_GET['page'])){
+$pageactuelle=(int) strip_tags($_GET['page']);
+}else{
+$pageactuelle=1;
+}
+$list=$bdd->prepare("SELECT count(*) AS nbre_user FROM user WHERE etat=0");
+$list->execute();
+$resultat=$list->fetch();
+$nbresuser=(int)$resultat['nbre_user'];
+$mapage=5;
+$pages=ceil($nbresuser/$mapage);
+$first=($pageactuelle*$mapage)-$mapage;
+$id=$data['id'];
+$list=$bdd->prepare("SELECT * FROM user WHERE roles='user'  AND id!=$id ORDER BY matricule desc LIMIT $first,$mapage");
+$list->execute();
+
+/*   $list = $bdd->prepare("SELECT * FROM user");
+$list->execute();  */ 
+if(isset($_POST["verif"])){
+ if(isset($_POST["classe"])){
+     $prenom = $_POST["classe"];
+     if(!empty($prenom)){                   
+include("../connexion/connect.php");
+$id=$data['id'];
+$list = "SELECT * FROM user WHERE roles='user'and  id!=$id AND prenom LIKE '%$prenom%' or nom LIKE '%$prenom%'  ";
+$list= $bdd->query($list);}}} 
+
+  while ($row = $list->fetch(PDO::FETCH_ASSOC)) {
+    // var_dump($row);
+    // exit;
+    $nom = $row['nom'];
+    $prenom = $row['prenom'];
+    $email = $row['email'];
+    $matricule = $row['matricule'];
+    $roles = $row['roles'];
+    $date_ins = $row['date inscription'];
+    $date_modif = $row['date_modif'];
+    $id = $row['id'];
+    $etat=$row['etat'];
+if($etat==0){
+
+echo '<tr>
+<th >' . $matricule . '</th>
+<td>' . $nom . '</td>
+<td>' . $prenom . '</td>
+<td>' . $roles . '</td>
+<td>' . $email . '</td>
 
 
-      if($roles=='user'){
+</tr>';
+}
+  }
+  ?>
 
-        echo '<tr>
-        <th >' . $matricule . '</th>
-        <td>' . $nom . '</td>
-        <td>' . $prenom . '</td>
-        <td>' . $roles . '</td>
-        <td>' . $email . '</td>
-      
-      </tr>';
-      }
-       
-            }
-      
-            ?>
-      
-          </tbody>
-        </table>
-      
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-      </body>
-      
-      <div id="footer" style=" height:30px; display:flex; justify-content:center;">
-        <button><i class="bi bi-arrow-left"></i></button>
-        <button><i class="bi bi-arrow-right"></i></button>
-      
-      </div>
-
-  </tbody>
+</tbody>
 </table>
 
+<nav aria-label="Page navigation example" style="margin-left:570px;">
+<ul class="pagination">
+<li class="page-item <?=($pageactuelle==1)? "disabled" : "" ?>">
+  <a class="page-link" href="?page=<?= $pageactuelle - 1?>" aria-label="Previous">
+    <span aria-hidden="true">&laquo;</span>
+  </a>
+</li>
+<?php
+for($page=1; $page <= $pages; $page++) : ?>
+<li class="page-item <?=($pageactuelle==$page)? "active" : "" ?> ">
+  <a class="page-link" href="?page=<?= $page ?>"><?= $page ?></a>
+</li>
+<?php endfor ?>
+<li class="page-item  <?=($pageactuelle==$pages)? "disabled" : "" ?> ">
+  <a class="page-link" href="?page=<?=$pageactuelle+1?>" aria-label="Next">
+    <span aria-hidden="true">&raquo;</span>
+  </a>
+</li>
+</ul>
+</nav>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
+
+
+
+</div>
+
+</html>
 <style>
-  #header{
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .moi{
+#header{
+display: flex;
+flex-wrap: wrap;
+}
+.moi{
 margin-left: 450px;
-  }
-  .role{
-    margin-left: 70px;
-  }
-  .ass{
-    font-size: 30px;
-  }
+}
+.role{
+margin-left: 70px;
+}
+.ass{
+font-size: 30px;
+}
+#message{
+display: flex;
+justify-content: center;
+}
 
 </style>
-</html>

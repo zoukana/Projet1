@@ -30,7 +30,7 @@ if (isset($_SESSION['id'])) {
 
 
         if($insert){ 
-          header('location:paramétrage.php? mes=image inserer avec succes!');
+          header('location:pageadmin.php? mes=image inserer avec succes!');
             $status = 'success'; 
             $statusMsg = "File uploaded successfully."; 
             // header('location:editProfile.php');
@@ -64,7 +64,6 @@ if (isset($_SESSION['id'])) {
 <header>
 <button type="button" class="btn btn-primary"><a href="../pages/paramétrage.php" style="color:white">Retour</a></button>
 
-  <p><?= $_GET['mess'] ?? null ?></p>
 </header>
 
 <body>
@@ -81,18 +80,17 @@ if (isset($_SESSION['id'])) {
       </div>
       <script src=""></script>
     </form> -->
-    <form action="paramétrage.php" class="d-flex justify-content-center border p-2 needs-validation bg-light shadow" novalidate  method="post" enctype="multipart/form-data">
+    <form action=""  novalidate  method="post" enctype="multipart/form-data">
 
 
 
-                <input type="file"  id="inputGroupFile02" class="form-control w-100 m-3" name="image" required>
+                <input type="file"  id="inputGroupFile02" class="form-control w-50 m-3" name="image" required>
                     <br>
                     <div class="valid-feedback"></div>
                     <div class="invalid-tooltip">Choisir une photo</div>
                     &nbsp;
                 <button type="submit" id="photo" name="submit" class="btn btn-outline-primary col-md-1.5" title="changer">envoyer</button>
-                <span class="d-flex border m-1 p-3 btn btn-outline">
-                </span>
+               
             </form>
 
 
