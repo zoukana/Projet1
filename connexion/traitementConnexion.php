@@ -50,6 +50,7 @@ error_reporting(E_ALL);
                         header('Location: ../pages/pageusersimple.php');
                         die();
                     }
+                  
                  }else{ header('Location: ../connexion/connexion.php?login_err=passwords'); die(); }
             }else{ header('Location: ../connexion/connexion.php?login_err=email'); die(); }
         }else{ header('Location:  ../connexion/connexion.php?login_err=already'); die(); }

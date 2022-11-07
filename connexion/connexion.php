@@ -42,6 +42,15 @@
                             </div>
                         <?php
                     break; 
+
+                    case 'mdr':
+                        ?>
+                            <div class="alert alert-danger">
+                                <strong>Erreur</strong> compte archivé
+                            </div>
+                        <?php
+                    break;
+                    
                 }
             }
         ?> 

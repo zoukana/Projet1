@@ -124,6 +124,7 @@ $photo = $res->fetch();
       </tr>
     </thead>
     <tbody>
+      
       <?php
 
 
