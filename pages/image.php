@@ -7,6 +7,7 @@ if (isset($_POST['submit'])){
 //ici on verifie si la session de l'utilisateur qui s'est connecté existe
 if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
+    $role = $_SESSION['roles'];
   }
   //ici on verifie si le champ de l'image est vide ou pas 
   if(!empty($_FILES["image"]["name"])) { 
@@ -30,8 +31,16 @@ if (isset($_SESSION['id'])) {
 
 
         if($insert){ 
-          header('location:pageadmin.php? mes=image inserer avec succes!');
+/*           var_dump($role);die;
+ */          $role == "admin" ? header('location:pageadmin.php? mes=image inserer avec succes!'):  header('location:pageusersimple.php? mes=image inserer avec succes!');
+          //   header('location:pageadmin.php? mes=image inserer avec succes!');
+
+          // }elseif($_session['roles']==='user'){
+          //   header('location:pageusersimple.php? mes=image inserer avec succes!');
+          // }
+        }
             $status = 'success'; 
+
             $statusMsg = "File uploaded successfully."; 
             // header('location:editProfile.php');
         }else{ 
@@ -43,7 +52,7 @@ if (isset($_SESSION['id'])) {
 }else{ 
     $statusMsg = 'Veuillez selectionner une image'; 
 }
-  }
+  // }
 
 ?>
 <!DOCTYPE html>

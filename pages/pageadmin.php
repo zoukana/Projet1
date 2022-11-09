@@ -84,7 +84,7 @@ $photo = $res->fetch();
   <div id="message" style="height: 80px; width:30%;margin-left: 500px;" >
     <div style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['msg'] ?? null ?></div>
     <div style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['msg1'] ?? null ?></div>
-    <div style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['modif'] ?? null ?></div>
+    <div id="succes" style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['modif'] ?? null ?></div>
     <div style="color:blue; height:30px; background-color:#F5F5F5;"><?= $_GET['delete'] ?? null ?></div>
     <div style="color:black; height:30px; background-color:#F5F5F5;"><?= $_GET['restaurer'] ?? null ?></div>
     <div style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['mes'] ?? null ?></div>
@@ -124,7 +124,7 @@ $photo = $res->fetch();
       </tr>
     </thead>
     <tbody>
-      
+
       <?php
 
 
@@ -224,7 +224,7 @@ $photo = $res->fetch();
 
 
 </div>
-
+<script src="controle.js"></script>
 </html>
 <style>
   #header {

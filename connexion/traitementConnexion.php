@@ -39,16 +39,20 @@ error_reporting(E_ALL);
                     $_SESSION['prenom'] = $data['prenom'];
                     $_SESSION['nom'] = $data['nom'];
                     $_SESSION['email'] = $data['email'];
+                    $_SESSION['roles'] = $data['roles'];
+
 
              
                     // $_SESSION['matricule'] = $res['matricule'];
-                
+                   
                     if($data['roles'] =='admin' && $data['etat'] == 0){
                         header('Location:../pages/pageadmin.php');
                         die();
                     }elseif($data['roles'] =='user' && $data['etat'] == 0){
                         header('Location: ../pages/pageusersimple.php');
                         die();
+                    } else {
+                        header('Location: ../connexion/connexion.php?login_err=mdr'); die(); 
                     }
                   
                  }else{ header('Location: ../connexion/connexion.php?login_err=passwords'); die(); }
