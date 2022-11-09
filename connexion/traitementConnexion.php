@@ -40,6 +40,7 @@ error_reporting(E_ALL);
                     $_SESSION['nom'] = $data['nom'];
                     $_SESSION['email'] = $data['email'];
                     $_SESSION['roles'] = $data['roles'];
+                    $_SESSION['photo'] = $data['photo'];
 
 
              

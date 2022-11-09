@@ -21,6 +21,13 @@ if(isset($_POST['nom'],$_POST['prenom'],$_POST['email'])){
   
     $id=$_GET['updateid'];	
     $datemodif=date('y-m-d h:i:s');
+
+    $rese = $bdd->query("SELECT email from user where email='$email'");
+    if ($rese->rowCount() > 0) {
+      $erreur="<div class='alert alert-danger' role='alert'>
+   <p class='text-center'> Email existant</p>
+    </div>";
+      } 
  
     $stmtAjoutPersonne=$bdd->prepare("UPDATE user SET nom='$nom',prenom='$prenom',email='$email', date_modif='$datemodif' WHERE id=$id");
     $stmtAjoutPersonne->execute();
@@ -51,6 +58,9 @@ if(isset($_POST['nom'],$_POST['prenom'],$_POST['email'])){
 
     <title>modification</title>
   </head>
+  <header>
+  <div><p><?= $erreur ?? null  ?> </p> </div>
+  </header>
   <body>
 
  <div class="container my-5 w-50 bg-light">
@@ -86,9 +96,9 @@ if(isset($_POST['nom'],$_POST['prenom'],$_POST['email'])){
         <input type="submit" id="submit" name="submit"  class="btn btn-primary" style="background-color:#05006B">
       </div> -->
       <div class="col-12">
-                <button type="submit" class="btn btn-primary" name="submit">Modifier</button>
+                <button type="submit" class="btn btn-primary" name="submit" id="submit">Modifier</button>
             </div> 
-      <script src=""></script>
+      <script src="../connexion/controleupdate.js"></script>
     </form>
     </div>
 

@@ -1,23 +1,30 @@
 <?php
+/* ini_set("display_errors", "-1");
+error_reporting(E_ALL); */
+session_start();
 include '../connexion/connect.php';
-/*  var_dump($_POST["nom"],$_POST['prenom'],$_POST['email'],$_POST['roles'],$_POST['photo'],$_POST['passwords']);die;
- */ if (isset($_POST["nom"], $_POST['prenom'], $_POST['email'], $_POST['roles'], $_POST['photo'], $_POST['passwords'])) {
+/*  var_dump($_GET["nom"],$_GET['prenom'],$_GET['email'],$_GET['roles'],$_GET['photo'],$_GET['passwords']);die;
+ */ if (isset($_POST["nom"], $_POST['prenom'], $_POST['email'], $_POST['roles'], $_POST['passwords'])) {
   # code...
   $nom = htmlspecialchars($_POST["nom"]);
   $prenom = htmlspecialchars($_POST['prenom']);
   $email = htmlspecialchars($_POST['email']);
   $roles = htmlspecialchars($_POST['roles']);
-  $photo = htmlspecialchars($_POST['photo']);
   $passwords = htmlspecialchars($_POST['passwords']);
-  
- $rese = $bdd->query("SELECT email from user where email='$email'");
- if ($rese->rowCount() > 0) {
-   $erreur="<div class='alert alert-danger' role='alert'>
-<p class='text-center'> Email existant</p>
- </div>";
-   } else{
-  $mat;
+  $photo=file_get_contents($_FILES['photo']['tmp_name']) ;
 
+
+  
+ /*  if (!empty($_FILES['photo'])) {
+    $photo=file_get_contents($_FILES['photo']['tmp_name']) ;
+  } */
+  $rese = $bdd->query("SELECT email from user where email='$email'");
+  if ($rese->rowCount() > 0) {
+    $erreur="<div class='alert alert-danger' role='alert'>
+ <p class='text-center'> Email existant</p>
+  </div>";
+    } 
+ 
   $res = $bdd->query("SELECT matricule from user");
   if ($res->rowCount() > 0) {
     $matricules = $res->fetchAll();
@@ -30,13 +37,32 @@ include '../connexion/connect.php';
     $mat = "KANA_2022/1";
   }
 
-   $cost = ['cost' => 12];
-  $passwords = password_hash($passwords, PASSWORD_DEFAULT); 
-  $stmtAjoutuser = $bdd->prepare("INSERT INTO user(nom,prenom,email,roles,photo,passwords,matricule) 
-        VALUES ('$nom','$prenom','$email','$roles','$photo','$passwords','$mat')");
-  $stmtAjoutuser->execute();
+    $rese = $bdd->prepare('SELECT email from user where email = ? ');
+    $rese->execute(array($email));
+    $req= $rese->fetch();
+    $res = $rese->rowCount();
+    if ($res == 0) {
+      $cost = ['cost' => 12];
+      $passwords = password_hash($passwords, PASSWORD_DEFAULT);  
 
-  if ($stmtAjoutuser) {
+      $stmtAjoutuser = $bdd->prepare("INSERT INTO user(nom,prenom,email,roles,passwords,matricule) 
+    VALUES (?,?,?,?,?,?)");
+    $stmtAjoutuser->bindParam(1,$nom);
+    $stmtAjoutuser->bindParam(2,$prenom);
+    $stmtAjoutuser->bindParam(3,$email);
+    $stmtAjoutuser->bindParam(4,$roles);
+/*     $stmtAjoutuser->bindParam(5,$photo);
+ */    $stmtAjoutuser->bindParam(5,$passwords);
+    $stmtAjoutuser->bindParam(6,$mat);
+   $stmtAjoutuser->execute();
+
+   $id=(int)$bdd->lastInsertId();
+   $req=$bdd->prepare("INSERT INTO images (photo,user) VALUES(?,?)");
+   $req->bindParam(1,$photo);
+   $req->bindParam(2,$id);
+   $req->execute();
+
+   if ($stmtAjoutuser) {
     $success = "<div class='alert alert-success' role='alert' style='width=25%'>
     <p class='text-center'> inscription reussi</p>
     <br>
@@ -52,7 +78,8 @@ include '../connexion/connect.php';
     die('Erreur : ' . $e->getMessage());
   }
 
- }
+    }
+
 
 
 }
@@ -74,7 +101,7 @@ include '../connexion/connect.php';
 
   <div class="container my-5">
 
-    <form action="formulaire.php" method="post" class="row g-3" style="background-color:#D9D9D9" id="loginform">
+    <form action="" method="POST" class="row g-3" style="background-color:#D9D9D9" id="loginform" enctype="multipart/form-data">
       <div>
         <h2 class="text-center">FORMULAIRE D'INSCRIPTION</h2>
       </div>
@@ -122,7 +149,7 @@ include '../connexion/connect.php';
 
       </div>
       <div class="col-auto">
-        <input type="file" class="form-control" id="photo" name="photo" placeholder="PHOTO">
+        <input type="file" class="form-control" id="photo" name="photo" placeholder="PHOTO" accept=".jpeg, .png, .jpj"> 
       </div>
       <br>
       <div class="col-6">

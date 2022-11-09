@@ -1,16 +1,15 @@
 <?php
 include('../connexion/connect.php');
 session_start();
-include('../connexion/connect.php');
 //requete nous permettant de recuperer les information de l'utilisateur qui s'est connecter
 $req = $bdd->prepare("SELECT * FROM user where matricule=?");
 $req->execute(array($_SESSION['matricule']));
 $data = $req->fetch();
 
 //requete nous permettant de recuperer la photo au niveau de notre table image
-$res = $bdd->prepare("SELECT photo FROM images WHERE user=?");
+ $res = $bdd->prepare("SELECT photo FROM images WHERE user=?");
 $res->execute([$_SESSION['id']]);
-$photo = $res->fetch();
+$photo = $res->fetch(); 
 // var_dump($photo);die;
 
 ?>
@@ -37,8 +36,13 @@ $photo = $res->fetch();
 <header>
   <div id="header" style="background-color:#645DFD; height:200px;">
     <div class="col-md-6">
-      <label for="inputState" class="form-label"><img style="width:100px; height:100px; border-radius:50px;/1500px;" src="data:image/png; charset=utf8;base64,<?php echo base64_encode($photo['photo']) ?>" alt="" srcset="">
-        <h6 style="color: white;"><?php echo $data['matricule']; ?> </h6>
+
+    <label for="inputState" class="form-label"><img style="width:100px; height:100px; border-radius:50px;/1500px;" src="data:image/png; charset=utf8;base64,<?php echo base64_encode($photo['photo']) ?>" alt="" srcset="">
+
+
+ 
+ 
+  <h6 style="color: white;"><?php echo $data['matricule']; ?> </h6>
         <button class="btn  btn-secondary my-1"><a href="../pages/paramétrage.php" class="text-light"><i class="bi bi-gear"> Paramétres</i></a></button>
     </div>
     <div class="moi">
@@ -83,7 +87,6 @@ $photo = $res->fetch();
   <br>
   <div id="message" style="height: 80px; width:30%;margin-left: 500px;" >
     <div style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['msg'] ?? null ?></div>
-    <div style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['msg1'] ?? null ?></div>
     <div id="succes" style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['modif'] ?? null ?></div>
     <div style="color:blue; height:30px; background-color:#F5F5F5;"><?= $_GET['delete'] ?? null ?></div>
     <div style="color:black; height:30px; background-color:#F5F5F5;"><?= $_GET['restaurer'] ?? null ?></div>
@@ -181,11 +184,11 @@ $photo = $res->fetch();
   <td>' . $email . '</td>
 
   <td>
-  <button class="btn btn-outline-primary my-1" "><a href="../CRUD/update.php?updateid=' . $id . '" ><i class="bi bi-pencil-fill"></i></a></button>
-  <button type="button" class="btn btn-danger my-1" onclick = "return confirm(\'voulez vous vraiment archiver\')"><a href="../CRUD/delete.php?deleteid=' . $id . '" style="color:white;"><i class="bi bi-archive"></i></a></button>
+  <button  title="modifier" class="btn btn-outline-primary my-1" "><a href="../CRUD/update.php?updateid=' . $id . '" ><i class="bi bi-pencil-fill"></i></a></button>
+  <button title="archivé" type="button" class="btn btn-danger my-1" onclick = "return confirm(\'voulez vous vraiment archiver\')"><a href="../CRUD/delete.php?deleteid=' . $id . '" style="color:white;"><i class="bi bi-archive"></i></a></button>
 
 
-  <button class="btn  btn-secondary my-1" ><a href="../CRUD/switch.php?switchid=' . $id . '" class="text-light"><i class="bi bi-arrow-down-up"></i></a></button>
+  <button title="switch" class="btn  btn-secondary my-1" ><a href="../CRUD/switch.php?switchid=' . $id . '" class="text-light"><i class="bi bi-arrow-down-up"></i></a></button>
 
   </td>
 
