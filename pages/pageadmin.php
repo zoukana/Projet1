@@ -184,7 +184,7 @@ $photo = $res->fetch();
   <td>' . $email . '</td>
 
   <td>
-  <button  title="modifier" class="btn btn-outline-primary my-1" "><a href="../CRUD/update.php?updateid=' . $id . '" ><i class="bi bi-pencil-fill"></i></a></button>
+  <button  title="modifier" class="btn btn-outline-primary my-1" onclick = "return confirm(\'voulez vous vraiment modifier\') "><a href="../CRUD/update.php?updateid=' . $id . '" ><i class="bi bi-pencil-fill"></i></a></button>
   <button title="archivé" type="button" class="btn btn-danger my-1" onclick = "return confirm(\'voulez vous vraiment archiver\')"><a href="../CRUD/delete.php?deleteid=' . $id . '" style="color:white;"><i class="bi bi-archive"></i></a></button>
 
 

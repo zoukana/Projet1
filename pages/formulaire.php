@@ -61,9 +61,18 @@ include '../connexion/connect.php';
    $req->bindParam(1,$photo);
    $req->bindParam(2,$id);
    $req->execute();
+   if($req){ 
+    // var_dump($role);die;
+    $role == "admin" ? header('location:pageadmin.php? mes=image inserer avec succes!'):  header('location:pageusersimple.php? mes=image inserer avec succes!');
+  header('location:pageadmin.php? mes=image inserer avec succes!');
+
+    // }elseif($_session['roles']==='user'){
+    //   header('location:pageusersimple.php? mes=image inserer avec succes!');
+    //  } 
+  }
 
    if ($stmtAjoutuser) {
-    $success = "<div class='alert alert-success' role='alert' style='width=25%'>
+    $success = "<div class='alert alert-success' role='alert' style='width=15%';>
     <p class='text-center'> inscription reussi</p>
     <br>
     <p class='text-center'>voulez vous restez  sur cette page?</p>

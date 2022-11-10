@@ -1,9 +1,4 @@
-/* const succes=document.getElementById("succes");
-if (succes){
-    setTimeout(()=>{
-        succes.classList.add("d-none");
-    } ,2000);
-} */
+
 
 var form= document.getElementById("loginform");
 var email= document.getElementById("email");

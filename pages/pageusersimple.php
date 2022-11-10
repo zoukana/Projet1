@@ -34,6 +34,8 @@ $req=$bdd->prepare("SELECT * FROM user where matricule=?" );
 </head>
 
 <header>
+
+
     <div id="header" style="background-color:#645DFD; height:200px;" >  
         <div class="col-md-6">
           <label for="inputState" class="form-label"><img style="width:100px; height:100px; border-radius:50px;/1500px;" src="data:image/png; charset=utf8;base64,<?php echo base64_encode($photo['photo']) ?>" alt="" srcset="">
@@ -84,6 +86,10 @@ $req=$bdd->prepare("SELECT * FROM user where matricule=?" );
   <div class="container" style="display:flex; justify-content: space-between; ">
     <nav class="navbar">
       <div class="container-fluid">
+      <div id="message" style="height: 80px; width:30%;margin-left: 380px;" >
+    <div style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['msg'] ?? null ?></div>
+    <div style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['mes'] ?? null ?></div>
+  </div>
 
       <form action="" method="post" class="d-flex" role="search" >
     <input type="text" name="classe" placeholder="search" class="form-control me-2"  aria-label="Search">
@@ -103,7 +109,7 @@ $req=$bdd->prepare("SELECT * FROM user where matricule=?" );
       <th scope="col">Matricule</th>
       <th scope="col">Nom</th>
       <th scope="col">Prenom</th>
-      <th scope="col">roles</th>
+      <th scope="col">date_inscription</th>
       <th scope="col">Email</th>
     </tr>
   </thead>
@@ -157,7 +163,7 @@ echo '<tr>
 <th >' . $matricule . '</th>
 <td>' . $nom . '</td>
 <td>' . $prenom . '</td>
-<td>' . $roles . '</td>
+<td>' . $date_ins. '</td>
 <td>' . $email . '</td>
 
 

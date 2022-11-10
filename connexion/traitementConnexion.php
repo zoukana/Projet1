@@ -41,6 +41,7 @@ error_reporting(E_ALL);
                     $_SESSION['email'] = $data['email'];
                     $_SESSION['roles'] = $data['roles'];
                     $_SESSION['photo'] = $data['photo'];
+                    $_SESSION['passwords'] = $data['passwords'];
 
 
              

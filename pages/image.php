@@ -31,13 +31,13 @@ if (isset($_SESSION['id'])) {
 
 
         if($insert){ 
-/*           var_dump($role);die;
- */          $role == "admin" ? header('location:pageadmin.php? mes=image inserer avec succes!'):  header('location:pageusersimple.php? mes=image inserer avec succes!');
-          //   header('location:pageadmin.php? mes=image inserer avec succes!');
-
+          // var_dump($role);die;
+          $role == "admin" ? header('location:pageadmin.php? mes=image inserer avec succes!'):  header('location:pageusersimple.php? mes=image inserer avec succes!');
+/*         header('location:pageadmin.php? mes=image inserer avec succes!');
+ */
           // }elseif($_session['roles']==='user'){
           //   header('location:pageusersimple.php? mes=image inserer avec succes!');
-          // }
+          //  } 
         }
             $status = 'success'; 
 
