@@ -87,8 +87,8 @@ $req=$bdd->prepare("SELECT * FROM user where matricule=?" );
     <nav class="navbar">
       <div class="container-fluid">
       <div id="message" style="height: 80px; width:30%;margin-left: 380px;" >
-    <div style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['msg'] ?? null ?></div>
-    <div style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['mes'] ?? null ?></div>
+    <div id="msg" style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['msg'] ?? null ?></div>
+    <div id="mes" style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['mes'] ?? null ?></div>
   </div>
 
       <form action="" method="post" class="d-flex" role="search" >
@@ -197,6 +197,7 @@ for($page=1; $page <= $pages; $page++) : ?>
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script src="../connexion/controle.js"></script>
 </body>
 
 
