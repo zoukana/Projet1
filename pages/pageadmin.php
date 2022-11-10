@@ -86,11 +86,11 @@ $photo = $res->fetch();
   <br>
   <br>
   <div id="message" style="height: 80px; width:30%;margin-left: 500px;" >
-    <div style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['msg'] ?? null ?></div>
+    <div id="msg" style="color:green; height:30px; background-color:#F5F5F5;" ><?= $_GET['msg'] ?? null ?></div>
     <div id="succes" style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['modif'] ?? null ?></div>
-    <div style="color:blue; height:30px; background-color:#F5F5F5;"><?= $_GET['delete'] ?? null ?></div>
-    <div style="color:black; height:30px; background-color:#F5F5F5;"><?= $_GET['restaurer'] ?? null ?></div>
-    <div style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['mes'] ?? null ?></div>
+    <div id="delete" style="color:blue; height:30px; background-color:#F5F5F5;"><?= $_GET['delete'] ?? null ?></div>
+    <div id="restaurer" style="color:black; height:30px; background-color:#F5F5F5;"><?= $_GET['restaurer'] ?? null ?></div>
+    <div id="mes" style="color:green; height:30px; background-color:#F5F5F5;"><?= $_GET['mes'] ?? null ?></div>
   </div>
 
   <div class="container" style="display:flex; justify-content: space-between; margin-top:10px ;">
@@ -227,7 +227,7 @@ $photo = $res->fetch();
 
 
 </div>
-<script src="controle.js"></script>
+<script src="../connexion/controle.js"></script>
 </html>
 <style>
   #header {

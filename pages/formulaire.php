@@ -11,7 +11,7 @@ include '../connexion/connect.php';
   $email = htmlspecialchars($_POST['email']);
   $roles = htmlspecialchars($_POST['roles']);
   $passwords = htmlspecialchars($_POST['passwords']);
-  $photo=file_get_contents($_FILES['photo']['tmp_name']) ;
+  @$photo=file_get_contents($_FILES['photo']['tmp_name']) ;
 
 
   
@@ -61,15 +61,6 @@ include '../connexion/connect.php';
    $req->bindParam(1,$photo);
    $req->bindParam(2,$id);
    $req->execute();
-   if($req){ 
-    // var_dump($role);die;
-    $role == "admin" ? header('location:pageadmin.php? mes=image inserer avec succes!'):  header('location:pageusersimple.php? mes=image inserer avec succes!');
-  header('location:pageadmin.php? mes=image inserer avec succes!');
-
-    // }elseif($_session['roles']==='user'){
-    //   header('location:pageusersimple.php? mes=image inserer avec succes!');
-    //  } 
-  }
 
    if ($stmtAjoutuser) {
     $success = "<div class='alert alert-success' role='alert' style='width=15%';>
