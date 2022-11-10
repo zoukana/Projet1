@@ -16,45 +16,7 @@ if (isset($_POST['submit'])) {
  */
   $query = $bdd->prepare("SELECT id, passwords FROM user WHERE id=$id");
   $query->execute();
-  // $num = mysqli_fetch_array($query);
-  /* $query->execute([
-  'id' =>$id, 
-  // 'passwords' => $ancien
-]);
 
-$passwordUser = $query->fetch();*/
-
-//   if (password_verify($_POST['opwd'], $passwords)) {
-//     $req = $bdd->prepare("UPDATE user SET passwords= $nouveau WHERE id=$id");
-//     $req->execute();
-//     // var_dump($req);die;
-//     if ($req) {
-//       /*       var_dump($role);die;
-//  */
-//       $role == "admin" ? header('location:pageadmin.php? msg=mot_de_passe modifier avec succes!') :  header('location:pageusersimple.php? msg=mot_de_passe modifier avec succes!');
-//     }
-//   } else {
-//     // echo 'Le mot de passe est invalide.';die;
-//     header('location:mdp.php?msg1=erreur de compte!');
-//   }
-  // var_dump(password_verify($nouveau,$passwords));die; 
-  // $check = password_verify($_POST['pwd'],$passwords);
-  /* var_dump($check);die;
- */
-
-  //  if($check){
-  //     $req=$bdd->prepare("UPDATE user SET passwords=:passwords and id=:id");
-  //     $req->execute(['passwords' => $nouveau, 'id ' => $id]);
-  //     if($req){
-  // /*       var_dump($role);die;
-  //  */      $role == "admin" ? header('location:pageadmin.php? msg=mot_de_passe modifier avec succes!'):  header('location:pageusersimple.php? msg=mot_de_passe modifier avec succes!');
-
-  //     }
-  // }else{
-  //   header('location:mdp.php?msg1=erreur de compte!');
-
-
-  // }
 
   $date_modif = date("Y-m-d H:i:s");
 $newPassword = password_hash($_POST['pwd'], PASSWORD_DEFAULT);

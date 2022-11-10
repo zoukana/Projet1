@@ -14,10 +14,7 @@ include '../connexion/connect.php';
   @$photo=file_get_contents($_FILES['photo']['tmp_name']) ;
 
 
-  
- /*  if (!empty($_FILES['photo'])) {
-    $photo=file_get_contents($_FILES['photo']['tmp_name']) ;
-  } */
+
   $rese = $bdd->query("SELECT email from user where email='$email'");
   if ($rese->rowCount() > 0) {
     $erreur="<div class='alert alert-danger' role='alert'>
